@@ -61,6 +61,9 @@ if __name__ == "__main__":
                 print('Open Error! Try again!')
                 continue
             else:
+                cv2.namedWindow('before',0)
+                cv2.imshow("before",image)
+                cv2.waitKey(0)
                 image   = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
                 r_image = retinaface.detect_image(image)
                 r_image = cv2.cvtColor(r_image,cv2.COLOR_RGB2BGR)
