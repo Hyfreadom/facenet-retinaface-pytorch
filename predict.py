@@ -9,7 +9,13 @@ import cv2
 import numpy as np
 
 from retinaface import Retinaface
-
+def display(img, frameName):
+    h, w = img.shape[0:2]
+    neww = 800
+    newh = int(neww*(h/w))
+    img = cv2.resize(img, (neww, newh))
+    cv2.imshow(frameName, img)
+    cv2.waitKey(0)
 if __name__ == "__main__":
     retinaface = Retinaface()
     #----------------------------------------------------------------------------------------------------------#
@@ -61,14 +67,11 @@ if __name__ == "__main__":
                 print('Open Error! Try again!')
                 continue
             else:
-                cv2.namedWindow('before',0)
-                cv2.imshow("before",image)
-                cv2.waitKey(0)
+                display(image,'before')
                 image   = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
                 r_image = retinaface.detect_image(image)
                 r_image = cv2.cvtColor(r_image,cv2.COLOR_RGB2BGR)
-                cv2.imshow("after",r_image)
-                cv2.waitKey(0)
+                display(image,'after')
 
     elif mode == "video":
         capture = cv2.VideoCapture(video_path)
@@ -137,3 +140,4 @@ if __name__ == "__main__":
                 cv2.imwrite(os.path.join(dir_save_path, img_name), r_image)
     else:
         raise AssertionError("Please specify the correct mode: 'predict', 'video', 'fps' or 'dir_predict'.")
+
